@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <style>
+        body {
+            background-color: #EFED51;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background-color: #ECB010;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        div.panel {
+            display: inline-block;
+        }
+
+        div.date {
+            font-size: 14px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        div.city {
+            font-size: 21px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding-top: 5px;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        div.temp {
+            font-size: 81px;
+            color: rgba(0, 0, 0, 0.9);
+            font-weight: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="left-panel panel">
+            <div class="date">
+                <p id="date"></p>
+            </div>
+            <div class="city">
+                {{ data.name }}
+            </div>
+            <div class="temp">
+                <img src="https://openweathermap.org/img/wn/{{data.weather.0.icon}}@2x.png" alt="" width="60">
+                {{ data.main.temp|floatformat:"-2" }}&deg;C
+            </div>
+            <div class="date">
+                Description: {{ data.weather.0.description }}<br>
+                Latitude: {{ data.coord.lat }}<br>
+                Longitude: {{ data.coord.lon }}<br><br>
+                <a href="{% url 'index' %}">Back to Enter City</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the current date
+        const currentDate = new Date();
+
+        // Format the date as desired (e.g., "Month Day, Year")
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+        // Insert the formatted date into the HTML element
+        document.getElementById('date').textContent = formattedDate;
+    </script>
+</body>
+</html>
